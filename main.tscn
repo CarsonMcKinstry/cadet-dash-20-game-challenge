@@ -1,12 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://date02p2kem86"]
+[gd_scene load_steps=5 format=3 uid="uid://date02p2kem86"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_j43yj"]
 [ext_resource type="PackedScene" uid="uid://dsl7yhps50rvo" path="res://features/environment/environment.tscn" id="1_m2as8"]
+[ext_resource type="Script" path="res://main.gd" id="1_snlff"]
+[ext_resource type="PackedScene" uid="uid://ctd6x04iyecba" path="res://features/player/player.tscn" id="3_4torx"]
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("game_environment")]
-script = ExtResource("1_j43yj")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ans0h"]
+size = Vector2(384, 32)
+
+[node name="World" type="Node2D" node_paths=PackedStringArray("game_environment", "player")]
+script = ExtResource("1_snlff")
 game_environment = NodePath("Environment")
+player = NodePath("Player")
+
+[node name="Player" parent="." node_paths=PackedStringArray("floor", "ceiling") instance=ExtResource("3_4torx")]
+z_index = 6
+position = Vector2(32, 113)
+floor = NodePath("../Floor")
+ceiling = NodePath("../Ceiling")
+thrust = 50
 
 [node name="Environment" parent="." instance=ExtResource("1_m2as8")]
-foreground_scroll_speed = Vector2i(66, 0)
-background_scroll_speed = Vector2i(33, 0)
+foreground_scrolling_speed = Vector2i(75, 0)
+background_scrolling_speed = Vector2i(50, 0)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(0, 112)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(192, 16)
+shape = SubResource("RectangleShape2D_ans0h")
+metadata/_edit_lock_ = true
+
+[node name="Ceiling" type="StaticBody2D" parent="."]
+position = Vector2(0, -32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
+position = Vector2(192, 16)
+shape = SubResource("RectangleShape2D_ans0h")
+metadata/_edit_lock_ = true
