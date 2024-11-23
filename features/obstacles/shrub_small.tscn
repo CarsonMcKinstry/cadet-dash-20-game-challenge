@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqnhi6v3wlbsl"]
+
+[ext_resource type="Script" path="res://features/obstacles/obstacle.gd" id="1_v6mhc"]
+[ext_resource type="Texture2D" uid="uid://dtxqsede8woqs" path="res://features/obstacles/assets/shrub-small.png" id="2_qbuch"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_67f7f"]
+size = Vector2(14, 9)
+
+[node name="ShrubSmall" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_v6mhc")
+sprite = NodePath("Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_67f7f")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_qbuch")

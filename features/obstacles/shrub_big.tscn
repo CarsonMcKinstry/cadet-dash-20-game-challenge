@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5s0l5wg44m2f"]
+
+[ext_resource type="Script" path="res://features/obstacles/obstacle.gd" id="1_t7luh"]
+[ext_resource type="Texture2D" uid="uid://bpr5fmx4k4v27" path="res://features/obstacles/assets/shrub-bigg.png" id="1_urs7u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5c6o2"]
+size = Vector2(16, 16)
+
+[node name="BigShrub" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+collision_layer = 6
+collision_mask = 6
+script = ExtResource("1_t7luh")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -7)
+texture = ExtResource("1_urs7u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_5c6o2")

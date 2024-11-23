@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfst51o0f5mes"]
+
+[ext_resource type="Script" path="res://features/obstacles/obstacle.gd" id="1_ipj47"]
+[ext_resource type="Texture2D" uid="uid://cf1u0wu0tfyjv" path="res://features/obstacles/assets/palm-tree.png" id="2_ixspg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m4f4j"]
+size = Vector2(12, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kny8l"]
+size = Vector2(33, 22)
+
+[node name="PalmTree" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_ipj47")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -39)
+texture = ExtResource("2_ixspg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -21)
+shape = SubResource("RectangleShape2D_m4f4j")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -54)
+shape = SubResource("RectangleShape2D_kny8l")

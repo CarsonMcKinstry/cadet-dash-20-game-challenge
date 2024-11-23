@@ -1,16 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://date02p2kem86"]
+[gd_scene load_steps=13 format=3 uid="uid://date02p2kem86"]
 
 [ext_resource type="PackedScene" uid="uid://dsl7yhps50rvo" path="res://features/environment/environment.tscn" id="1_m2as8"]
 [ext_resource type="Script" path="res://main.gd" id="1_snlff"]
 [ext_resource type="PackedScene" uid="uid://ctd6x04iyecba" path="res://features/player/player.tscn" id="3_4torx"]
+[ext_resource type="PackedScene" uid="uid://b5s0l5wg44m2f" path="res://features/obstacles/shrub_big.tscn" id="4_dwgb3"]
+[ext_resource type="PackedScene" uid="uid://dfq6qj2gr3m1t" path="res://features/spawner/obstacle_spawner.tscn" id="4_ftebj"]
+[ext_resource type="PackedScene" uid="uid://dfst51o0f5mes" path="res://features/obstacles/palm_tree.tscn" id="5_10an2"]
+[ext_resource type="PackedScene" uid="uid://cvg8m2np468tm" path="res://features/obstacles/shrub_medium.tscn" id="6_jgb33"]
+[ext_resource type="PackedScene" uid="uid://cqnhi6v3wlbsl" path="res://features/obstacles/shrub_small.tscn" id="8_tt83k"]
+[ext_resource type="PackedScene" uid="uid://b2chp4wbsf3r5" path="res://features/obstacles/tree_tall.tscn" id="9_ah1ty"]
+[ext_resource type="PackedScene" uid="uid://c4jhawmy3bnlu" path="res://features/hud/hud.tscn" id="10_vyc5p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ans0h"]
 size = Vector2(384, 32)
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("game_environment", "player")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i0icd"]
+size = Vector2(16, 144)
+
+[node name="World" type="Node2D" node_paths=PackedStringArray("game_environment", "player", "destroyer", "obstacle_spawner", "score_timer")]
 script = ExtResource("1_snlff")
 game_environment = NodePath("Environment")
 player = NodePath("Player")
+destroyer = NodePath("Destroyer")
+obstacle_spawner = NodePath("ObstacleSpawner")
+score_timer = NodePath("ScoreTimer")
 
 [node name="Player" parent="." node_paths=PackedStringArray("floor", "ceiling") instance=ExtResource("3_4torx")]
 z_index = 6
@@ -38,3 +51,31 @@ position = Vector2(0, -32)
 position = Vector2(192, 16)
 shape = SubResource("RectangleShape2D_ans0h")
 metadata/_edit_lock_ = true
+
+[node name="Destroyer" type="StaticBody2D" parent="."]
+position = Vector2(-128, 0)
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Destroyer"]
+position = Vector2(8, 72)
+shape = SubResource("RectangleShape2D_i0icd")
+metadata/_edit_lock_ = true
+
+[node name="ObstacleSpawner" parent="." node_paths=PackedStringArray("world") instance=ExtResource("4_ftebj")]
+world = NodePath("..")
+spawn_chance = 80
+obstacles = Array[PackedScene]([ExtResource("5_10an2"), ExtResource("4_dwgb3"), ExtResource("6_jgb33"), ExtResource("8_tt83k"), ExtResource("9_ah1ty")])
+
+[node name="HUD" parent="." node_paths=PackedStringArray("world") instance=ExtResource("10_vyc5p")]
+offset_right = 192.0
+offset_bottom = 144.0
+world = NodePath("..")
+
+[node name="ScoreTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[connection signal="gameover" from="." to="ObstacleSpawner" method="_on_world_gameover"]
+[connection signal="gameover" from="." to="HUD" method="_on_world_gameover"]
+[connection signal="next_score" from="." to="HUD" method="_on_world_next_score"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]

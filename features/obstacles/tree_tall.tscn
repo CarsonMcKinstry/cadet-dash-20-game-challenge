@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2chp4wbsf3r5"]
+
+[ext_resource type="Script" path="res://features/obstacles/obstacle.gd" id="1_4pimi"]
+[ext_resource type="Texture2D" uid="uid://dbjxi5ke06iv1" path="res://features/obstacles/assets/tall-tree.png" id="2_xplxw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vm70k"]
+size = Vector2(16, 48)
+
+[node name="TreeTall" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_4pimi")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -23)
+texture = ExtResource("2_xplxw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -23)
+shape = SubResource("RectangleShape2D_vm70k")
