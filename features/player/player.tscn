@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ctd6x04iyecba"]
+[gd_scene load_steps=36 format=3 uid="uid://ctd6x04iyecba"]
 
 [ext_resource type="Script" path="res://features/player/player.gd" id="1_jvu2e"]
 [ext_resource type="Texture2D" uid="uid://cokcqvsgueamw" path="res://assets/Space Cadet Sprite Sheet.png" id="1_rahvx"]
@@ -40,6 +40,10 @@ atlas = ExtResource("1_rahvx")
 region = Rect2(224, 128, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eomhf"]
+atlas = ExtResource("1_rahvx")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6smg6"]
 atlas = ExtResource("1_rahvx")
 region = Rect2(224, 0, 32, 32)
 
@@ -158,6 +162,9 @@ animations = [{
 "speed": 12.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6smg6")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dt3ot")
 }, {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://date02p2kem86"]
+[gd_scene load_steps=14 format=3 uid="uid://date02p2kem86"]
 
 [ext_resource type="PackedScene" uid="uid://dsl7yhps50rvo" path="res://features/environment/environment.tscn" id="1_m2as8"]
 [ext_resource type="Script" path="res://main.gd" id="1_snlff"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cvg8m2np468tm" path="res://features/obstacles/shrub_medium.tscn" id="6_jgb33"]
 [ext_resource type="PackedScene" uid="uid://cqnhi6v3wlbsl" path="res://features/obstacles/shrub_small.tscn" id="8_tt83k"]
 [ext_resource type="PackedScene" uid="uid://b2chp4wbsf3r5" path="res://features/obstacles/tree_tall.tscn" id="9_ah1ty"]
+[ext_resource type="PackedScene" uid="uid://c8lrtfhs5i7wr" path="res://features/obstacles/bee.tscn" id="10_fmu4n"]
 [ext_resource type="PackedScene" uid="uid://c4jhawmy3bnlu" path="res://features/hud/hud.tscn" id="10_vyc5p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ans0h"]
@@ -28,6 +29,8 @@ score_timer = NodePath("ScoreTimer")
 [node name="Player" parent="." node_paths=PackedStringArray("floor", "ceiling") instance=ExtResource("3_4torx")]
 z_index = 6
 position = Vector2(32, 113)
+collision_layer = 11
+collision_mask = 11
 floor = NodePath("../Floor")
 ceiling = NodePath("../Ceiling")
 thrust = 50
@@ -65,7 +68,7 @@ metadata/_edit_lock_ = true
 [node name="ObstacleSpawner" parent="." node_paths=PackedStringArray("world") instance=ExtResource("4_ftebj")]
 world = NodePath("..")
 spawn_chance = 80
-obstacles = Array[PackedScene]([ExtResource("5_10an2"), ExtResource("4_dwgb3"), ExtResource("6_jgb33"), ExtResource("8_tt83k"), ExtResource("9_ah1ty")])
+obstacles = Array[PackedScene]([ExtResource("5_10an2"), ExtResource("4_dwgb3"), ExtResource("6_jgb33"), ExtResource("8_tt83k"), ExtResource("9_ah1ty"), ExtResource("10_fmu4n")])
 
 [node name="HUD" parent="." node_paths=PackedStringArray("world") instance=ExtResource("10_vyc5p")]
 offset_right = 192.0
@@ -75,7 +78,8 @@ world = NodePath("..")
 [node name="ScoreTimer" type="Timer" parent="."]
 wait_time = 0.05
 
+[connection signal="game_state_changed" from="." to="HUD" method="_on_world_game_state_changed"]
 [connection signal="gameover" from="." to="ObstacleSpawner" method="_on_world_gameover"]
-[connection signal="gameover" from="." to="HUD" method="_on_world_gameover"]
+[connection signal="next_hiscore" from="." to="HUD" method="_on_world_next_hiscore"]
 [connection signal="next_score" from="." to="HUD" method="_on_world_next_score"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]

@@ -68,12 +68,14 @@ func _physics_process(delta):
 			_state = PlayerState.FLYING
 
 func enter():
+	position.y = 112
 	_state = PlayerState.ENTER
 	await sprite.animation_finished
 	_state = PlayerState.IDLE
 
 func die():
 	_state = PlayerState.DIE
+	particles.emitting = false
 	await sprite.animation_finished
 
 func start_running():

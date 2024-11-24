@@ -28,6 +28,7 @@ window/stretch/mode="canvas_items"
 2d_physics/layer_1="player"
 2d_physics/layer_2="Obstacles"
 2d_physics/layer_3="destroyer"
+2d_physics/layer_4="flying_enemies"
 
 [rendering]
 
